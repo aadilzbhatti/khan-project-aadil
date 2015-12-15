@@ -1,4 +1,4 @@
-from nodes import Coach
+from nodes import Coach, Student
 
 """
 The total infection algorithm. Infects entire classroom in a 

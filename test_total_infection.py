@@ -3,38 +3,6 @@ from nodes import Coach, Student
 from total_infection import total_infection
 
 class TestTotalInfection(TestCase):
-	def setUp(self):
-		self.coach = Coach()
-		for i in range(10):
-			self.coach.add_student()
-
-	def test_add_student(self):
-		num_students = len(self.coach.students)
-		self.coach.add_student()
-		self.assertTrue(num_students != len(self.coach.students))
-
-	def test_add_coach(self):
-		c1 = Coach()
-		c2 = Coach()
-		c1.add_coach(c2)
-		c1.add_coach()
-		self.assertEqual(len(c1.students), 2)
-		self.assertEqual(c2.coach, c1)
-
-	def test_student_coach(self):
-		for student in self.coach.students:
-			self.assertEqual(student.coach, self.coach)
-
-	def test_infected_coach(self):
-		c = Coach()
-		c.infect()
-		self.assertTrue(c.infected)
-
-	def test_infected_student(self):
-		s = Student()
-		s.infect()
-		self.assertTrue(s.infected)
-
 	"""
 	This is the main test for the program. It tests, using a list of coaches
 	who each have a set of students and one with another coach as a student,
@@ -53,7 +21,7 @@ class TestTotalInfection(TestCase):
 			for _ in range(num_students):
 				coaches[i].add_student()
 
-		s1 = int(1 + random.random() * 10)		# here we add a coach-coach relationship
+		s1 = int(random.random() * 10)		# here we add a coach-coach relationship
 		s2 = 10 - s1
 		coaches[s1].add_coach()
 
@@ -76,3 +44,6 @@ class TestTotalInfection(TestCase):
 				if isinstance(v, Coach):
 					for student in v.students:
 						s.append(student)
+
+if __name__ == '__main__':
+    unittest.main()

@@ -21,11 +21,37 @@ class Coach:
 		s = Student()
 		self.students.append(s)
 		s.coach = self
+		return s
 
 	def add_coach(self, coach=None):
 		c = coach if coach else Coach()
 		self.students.append(c)
 		c.coach = self
+		return c
+
+	def count(self):
+		count = 1
+		s = [self]
+		while s:
+			v = s.pop()
+			count += 1
+			if isinstance(v, Coach):
+				for student in v.students:
+					s.append(student)
+		return count
+
+	def count_infected(self):
+		if self.coach is not None:
+			return count_infected(self.coach)
+		count = 1 if self.infected else 0
+		s = [self]
+		while s:
+			v = s.pop()
+			count = count + 1 if v.infected else count
+			if isinstance(v, Coach):
+				for student in v.students:
+					s.append(student)
+		return count
 
 class Student:
 	next_id = 0
