@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Coach import Coach, Student, total_infection
+from total import Coach, Student, total_infection
 
 class TestTotalInfection(TestCase):
 	def setUp(self):
@@ -34,6 +34,12 @@ class TestTotalInfection(TestCase):
 		s.infect()
 		self.assertTrue(s.infected)
 
+	"""
+	This is the main test for the program. It tests, using a list of coaches
+	who each have a set of students and one with another coach as a student,
+	whether or not the entire set has been infected. It does this using a depth-first
+	traversal of the "forest" of coaches. 
+	"""
 	def test_total_infection(self):
 		coaches = []
 		for i in range(10):
@@ -46,12 +52,12 @@ class TestTotalInfection(TestCase):
 			for _ in range(num_students):
 				coaches[i].add_student()
 
-		s1 = int(1 + random.random() * 10)				# here we add a coach-coach relationship
+		s1 = int(1 + random.random() * 10)		# here we add a coach-coach relationship
 		s2 = 10 - s1
 		coaches[s1].add_coach()
 
 		for coach in coaches:
-			total_infection(coach)
+			total_infection(coach)				# infect them all!
 
 		"""
 		Since not every coach coaches other coaches (wow), we need to loop 
