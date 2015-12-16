@@ -32,7 +32,7 @@ can be infected within a certain limit.
 """
 def infectable(coaches, limit):
 	for i in range(len(coaches)):
-		limit = limited_infection(coaches[i], limit)
-		if not limit:
+		limit -= coaches[i].count()
+		if limit < 0:
 			return i
 	return len(coaches)

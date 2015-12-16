@@ -87,11 +87,6 @@ class TestLimitedInfection(TestCase):
 		# to show that we can't give everyone the new feature
 		self.assertFalse(limited_infection(coaches[-1], limit))
 
-		limit = abs_limit - coaches[-1].count()
-
-		# a way of showing how many coaches we can infect with this limit				
-		self.assertEqual(infectable(coaches, limit), 8)
-
 	"""
 	These test whether we can infect the entire tree from 
 	a child node.
@@ -129,3 +124,20 @@ class TestLimitedInfection(TestCase):
 		self.assertEqual(limit, 2)
 		limit = limited_infection(c, 8)
 		self.assertEqual(limit, 8)
+
+	"""
+	Test to see how many coaches we can infect with the 
+	given limit.
+	"""
+	def test_infectable(self):
+		c = Coach()
+		coaches = [c]
+		for i in range(5):
+			c1 = c.add_coach()
+			coaches.append(c1)
+			for j in range(5):
+				c1.add_student()
+		limit = 0
+		for i in range(len(coaches) - 1):
+			limit += coaches[i].count()
+		self.assertEqual(infectable(coaches, limit), 5)
