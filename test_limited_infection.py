@@ -24,10 +24,11 @@ class TestLimitedInfection(TestCase):
 		self.assertEqual(limited_infection(self.head, 100), 0)
 
 	"""
-	The more realistic case where we are seeing how many coaches
-	in a set of coaches can be infected
+	The more realistic cases where we are seeing how many coaches
+	in a set of coaches can be infected. This test uses a full limit
+	to ensure everyone gets infected. 
 	"""
-	def test_limited_infection_on_forest(self):
+	def test_forest_with_full_limit(self):
 		coaches = []
 		# create a forest of 10 trees
 		for i in range(10):									
@@ -55,6 +56,30 @@ class TestLimitedInfection(TestCase):
 		# to show that we can give everyone the new feature
 		self.assertEqual(limit, 0)
 
+	"""
+	Tests a less than full limit on a forest to ensure that not 
+	everyone gets infected. 
+	"""
+	def test_forest_with_less_limit(self):
+		coaches = []
+		# create a forest of 10 trees
+		for i in range(10):									
+			c = Coach()
+			coaches.append(c)
+			import random
+			num = int(1 + random.random() * 10)
+			# add between 1 and 10 child coaches
+			for j in range(num):							
+				c1 = c.add_coach()
+				students = int(1 + random.random() * 10)
+				# add between 1 and 10 students
+				for _ in range(students):					
+					c1.add_student()
+
+		abs_limit = 0
+		for coach in coaches:
+			abs_limit += coach.count()
+
 		limit = abs_limit - coaches[-1].count()				
 		for i in range(len(coaches) - 1):
 			limit = limited_infection(coaches[i], limit)
@@ -63,6 +88,7 @@ class TestLimitedInfection(TestCase):
 		self.assertFalse(limited_infection(coaches[-1], limit))
 
 		limit = abs_limit - coaches[-1].count()
+
 		# a way of showing how many coaches we can infect with this limit				
 		self.assertEqual(infectable(coaches, limit), 8)
 
@@ -91,3 +117,12 @@ class TestLimitedInfection(TestCase):
 		self.assertEqual(z, 0)
 		f = limited_infection(coach, 20)
 		self.assertFalse(f)
+
+	"""
+	Tests if a coach has been infected, do not re-infect.
+	"""
+	def test_limited_infection_when_already_infected(self):
+		limit = limited_infection(self.head, self.head.count() * 2)
+		old_limit = limit
+		limit = limited_infection(self.head, limit)
+		self.assertEqual(old_limit, limit)

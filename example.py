@@ -24,14 +24,15 @@ We have now created a set of 4 schools, each with 1 principal, 3 teachers,
 and 3 students per teacher. We need to keep it small due to the limitations
 of the size of matplotlib's figures. 
 """
-# 1st visualization: no infection
+
+# 1st visualization: no infection (see no_infection.png)
 graph(heads)
 
-# now we do a total infection
+# Now we do a total infection
 for head in heads:
 	total_infection(head)
 
-# 2nd visualization: total infection
+# 2nd visualization: total infection (see total_infection.png)
 graph(heads)
 
 # One can see that everyone has been infected. 
@@ -53,11 +54,11 @@ limit = 32
 # We can see how many coaches we can infect. In this case, 2.
 print(infectable(heads, 32))
 
-# nNw we infect
+# Now we infect
 for head in heads:
 	limit = limited_infection(head, limit)
 
-# 3rd visualization: limited infection
+# 3rd visualization: limited infection (see limited_infection.png)
 graph(heads)
 
 # One can see that only two of the four schools have been infected. 

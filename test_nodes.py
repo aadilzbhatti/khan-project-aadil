@@ -34,5 +34,8 @@ class TestNodes(TestCase):
 		s.infect()
 		self.assertTrue(s.infected)
 
+	def test_count(self):
+		self.assertEqual(self.coach.count(), 12)
+
 if __name__ == '__main__':
     unittest.main()
