@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
 from nodes import Coach, Student
-from limited_infection import limited_infection
 
 def graph(coaches):
 	G = nx.Graph()
@@ -29,12 +28,15 @@ def graph(coaches):
 				node_colors.append("green")
 			else:
 				node_colors.append("orange")
+
 	pos = nx.spring_layout(G)
 	nx.draw_networkx_nodes(G, pos=pos, node_color=node_colors, node_size=50)
 	nx.draw_networkx_edges(G, pos=pos)
+
 	orange_patch = mpatches.Patch(color='orange', label='Uninfected Coach')
 	red_patch = mpatches.Patch(color='red', label='Uninfected Student')
 	green_patch = mpatches.Patch(color='green', label='Infected Coach')
 	blue_patch = mpatches.Patch(color='blue', label='Infected Student')
+
 	plt.legend(handles=[orange_patch, red_patch, green_patch, blue_patch], loc=0, prop={'size': 6})
 	plt.show()

@@ -15,3 +15,11 @@ One can model a school with one "principal" ``Coach`` node whose "students" are 
 
 ##``limited_infection.py``
 ``limited_infection.py`` contains the ``limited_infection`` algorithm as specified by the project guidelines. This is slightly more involved than ``total_infection`` as we need to consider the number of people we want to infect. So essentially all that happens is we invoke a ``count`` function that counts how many children nodes a certain coach has. If this value is greater than the allowed limit, we do not infect the coach or its children. This algorithm is designed to operate on a single coach-student tree, however, it is more useful when we have a forest because then we can see how many coaches we can infect out of a set of coaches. 
+
+# Visualization
+I added the ability for a user to see exactly how they are infecting the population. To see this, construct your coaches/students as you see fit. Then you simply import ``visual`` and run the ``graph`` method on the set of coaches. You will need to pass a list as a parameter as it constructs the visualization as a forest. The ``graph`` method uses the ``networkx`` to construct a forest of undirected graphs, one graph per coach. The nodes are color-coded to ensure clarity. To see the visualization, you will need ``matplotlib`` and ``networkx`` installed. You can simply run ``pip install <module>`` to get them. 
+
+If you run ``total_infection`` or ``limited_infection`` on your set of coaches, you can then graph the set to see the results. 
+
+# Examples
+I have included a file called ``example.py`` to show how to use the methods outlined above. If you have any questions, please let me know. 
