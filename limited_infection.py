@@ -11,6 +11,8 @@ every child in the tree if the limit is large enough. We then
 return the new limit for further use.
 """
 def limited_infection(coach, limit):
+	if isinstance(coach, Student) or coach.coach is not None:
+		return limited_infection(coach.coach, limit)
 	if coach.count() > limit:
 		return False
 	s = [coach]

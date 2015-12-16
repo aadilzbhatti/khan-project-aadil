@@ -29,30 +29,65 @@ class TestLimitedInfection(TestCase):
 	"""
 	def test_limited_infection_on_forest(self):
 		coaches = []
-		for i in range(10):									# create a forest of 10 trees
+		# create a forest of 10 trees
+		for i in range(10):									
 			c = Coach()
 			coaches.append(c)
 			import random
 			num = int(1 + random.random() * 10)
-			for j in range(num):							# add between 1 and 10 child coaches
+			# add between 1 and 10 child coaches
+			for j in range(num):							
 				c1 = c.add_coach()
 				students = int(1 + random.random() * 10)
-				for _ in range(students):					# add between 1 and 10 students
+				# add between 1 and 10 students
+				for _ in range(students):					
 					c1.add_student()
 
 		abs_limit = 0
 		for coach in coaches:
-			abs_limit += coach.count()						# abs_limit should be a number in the hundreds now
-		
-		limit = abs_limit									# to show that we can give everyone the new feature
+			abs_limit += coach.count()	
+
+		# abs_limit should be a number in the hundreds now					
+		limit = abs_limit									
 		for coach in coaches:
 			limit = limited_infection(coach, limit)
+
+		# to show that we can give everyone the new feature
 		self.assertEqual(limit, 0)
 
-		limit = abs_limit - coaches[-1].count()				# to show that we can't give everyone the new feature
+		limit = abs_limit - coaches[-1].count()				
 		for i in range(len(coaches) - 1):
 			limit = limited_infection(coaches[i], limit)
+
+		# to show that we can't give everyone the new feature
 		self.assertFalse(limited_infection(coaches[-1], limit))
 
-		limit = abs_limit - coaches[-1].count()				# a way of showing how many coaches we can infect with this limit
+		limit = abs_limit - coaches[-1].count()
+		# a way of showing how many coaches we can infect with this limit				
 		self.assertEqual(infectable(coaches, limit), 8)
+
+	"""
+	These test whether we can infect the entire tree from 
+	a child node.
+	"""
+	def test_limited_infection_from_student_to_parent(self):
+		c = Coach()
+		for i in range(5):
+			c.add_student()
+		s = c.students[0]
+		z = limited_infection(s, 5)
+		self.assertEqual(z, 0)
+		f = limited_infection(s, 3)
+		self.assertFalse(f)
+
+	def test_limited_infection_from_coach_to_parent(self):
+		c = Coach()
+		for i in range(5):
+			c1 = c.add_coach()
+			for j in range(5):
+				c1.add_student()
+		coach = c.students[0]
+		z = limited_infection(coach, 25)
+		self.assertEqual(z, 0)
+		f = limited_infection(coach, 20)
+		self.assertFalse(f)

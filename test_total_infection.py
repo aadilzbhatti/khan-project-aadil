@@ -45,5 +45,26 @@ class TestTotalInfection(TestCase):
 					for student in v.students:
 						s.append(student)
 
+	"""
+	These test calling total_infection on a student or coach with a parent coach
+	"""
+	def test_total_infection_from_student_to_parent(self):
+		c = Coach()
+		for i in range(5):
+			c.add_student()
+		s = c.students[0]
+		total_infection(s)
+		self.assertEqual(c.count_infected(), c.count())
+
+	def test_total_infection_from_coach_to_parent(self):
+		c = Coach()		
+		for i in range(5):
+			c.add_student()
+		s = c.add_coach()
+		for i in range(5):
+			s.add_student()
+		total_infection(s)
+		self.assertEqual(c.count_infected(), c.count())
+
 if __name__ == '__main__':
     unittest.main()
