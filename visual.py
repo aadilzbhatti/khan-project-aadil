@@ -1,14 +1,22 @@
 import networkx as nx
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
+
 from nodes import Coach, Student
 from limited_infection import limited_infection
 
 def graph(coaches):
 	G = nx.Graph()
 	for coach in coaches:
-		for student in coach.students:
-			G.add_edge(coach, student)
-	pos = nx.spring_layout(G)
+		s = [coach]
+		current = coach
+		while s:
+			v = s.pop()
+			G.add_edge(current, v)
+			if isinstance(v, Coach):
+				for student in v.students:
+					s.append(student)
+					current = v
 	node_colors = []
 	for n in G.nodes():
 		if isinstance(n, Student):
@@ -21,25 +29,12 @@ def graph(coaches):
 				node_colors.append("green")
 			else:
 				node_colors.append("orange")
-	nx.draw_networkx_nodes(G, pos=pos, node_color=node_colors)
+	pos = nx.spring_layout(G)
+	nx.draw_networkx_nodes(G, pos=pos, node_color=node_colors, node_size=50)
 	nx.draw_networkx_edges(G, pos=pos)
-	plt.legend(["Coaches"], loc=0)
+	orange_patch = mpatches.Patch(color='orange', label='Uninfected Coach')
+	red_patch = mpatches.Patch(color='red', label='Uninfected Student')
+	green_patch = mpatches.Patch(color='green', label='Infected Coach')
+	blue_patch = mpatches.Patch(color='blue', label='Infected Student')
+	plt.legend(handles=[orange_patch, red_patch, green_patch, blue_patch], loc=0, prop={'size': 6})
 	plt.show()
-
-
-c = Coach()
-coaches = [c]
-for i in range(5):
-	s = c.add_coach()
-	coaches.append(s)
-	for j in range(5):
-		s.add_student()
-for i in range(5):
-	c1 = Coach()
-	coaches.append(c1)
-	for j in range(5):
-		c1.add_student()
-
-for coach in coaches:
-	limit = limited_infection(coach, 20)
-graph(coaches)
