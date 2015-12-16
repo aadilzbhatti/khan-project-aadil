@@ -122,7 +122,10 @@ class TestLimitedInfection(TestCase):
 	Tests if a coach has been infected, do not re-infect.
 	"""
 	def test_limited_infection_when_already_infected(self):
-		limit = limited_infection(self.head, self.head.count() * 2)
-		old_limit = limit
-		limit = limited_infection(self.head, limit)
-		self.assertEqual(old_limit, limit)
+		c = Coach()
+		for i in range(5):
+			c.add_student()
+		limit = limited_infection(c, 8)
+		self.assertEqual(limit, 2)
+		limit = limited_infection(c, 8)
+		self.assertEqual(limit, 8)

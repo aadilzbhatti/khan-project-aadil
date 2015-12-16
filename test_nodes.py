@@ -1,5 +1,6 @@
 from unittest import TestCase
 from nodes import Coach, Student
+from total_infection import total_infection
 
 class TestNodes(TestCase):
 	def setUp(self):
@@ -35,7 +36,11 @@ class TestNodes(TestCase):
 		self.assertTrue(s.infected)
 
 	def test_count(self):
-		self.assertEqual(self.coach.count(), 12)
+		self.assertEqual(self.coach.count(), 11)
+
+	def test_count_infected(self):
+		total_infection(self.coach)
+		self.assertEqual(self.coach.count_infected(), self.coach.count())
 
 if __name__ == '__main__':
     unittest.main()

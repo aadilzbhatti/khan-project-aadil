@@ -30,7 +30,7 @@ class Coach:
 		return c
 
 	def count(self):
-		count = 1
+		count = 0
 		s = [self]
 		while s:
 			v = s.pop()
@@ -43,7 +43,7 @@ class Coach:
 	def count_infected(self):
 		if self.coach is not None:
 			return count_infected(self.coach)
-		count = 1 if self.infected else 0
+		count = 0
 		s = [self]
 		while s:
 			v = s.pop()
