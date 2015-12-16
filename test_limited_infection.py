@@ -96,8 +96,6 @@ class TestLimitedInfection(TestCase):
 		for i in range(5):
 			c.add_student()
 		s = c.students[0]
-		z = limited_infection(s, 5)
-		self.assertEqual(z, 0)
 		f = limited_infection(s, 3)
 		self.assertFalse(f)
 
@@ -108,8 +106,6 @@ class TestLimitedInfection(TestCase):
 			for j in range(5):
 				c1.add_student()
 		coach = c.students[0]
-		z = limited_infection(coach, 25)
-		self.assertEqual(z, 0)
 		f = limited_infection(coach, 20)
 		self.assertFalse(f)
 
